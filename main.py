@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
-from PyQt5.QtCore import QEvent, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QImage
 import sys
 from load_map import *
@@ -46,17 +46,17 @@ class App(QMainWindow):
         elif e.key() in [Qt.Key_Up, Qt.Key_Left, Qt.Key_Right, Qt.Key_Down]:
             try:
                 if e.key() == Qt.Key_Up:
-                    if self.lattitude + 0.1 <= 180:
-                        self.lattitude += 0.1
+                    if self.lattitude + 0.5 / self.start_spn <= 180:
+                        self.lattitude += 0.5 / self.start_spn
                 elif e.key() == Qt.Key_Down:
-                    if self.lattitude - 0.1 >= 0:
-                        self.lattitude -= 0.1
+                    if self.lattitude - 0.5 / self.start_spn >= 0:
+                        self.lattitude -= 0.5 / self.start_spn
                 elif e.key() == Qt.Key_Left:
-                    if self.longitude - 0.1 >= 0:
-                        self.longitude -= 0.1
+                    if self.longitude - 0.5 / self.start_spn >= 0:
+                        self.longitude -= 0.5 / self.start_spn
                 else:
-                    if self.longitude + 0.1 <= 180:
-                        self.longitude += 0.1
+                    if self.longitude + 0.5 / self.start_spn <= 180:
+                        self.longitude += 0.5 / self.start_spn
                 image = load_map(self.longitude, self.lattitude,
                                  self.start_spn, self.start_mode)
                 self.show_image(image, self.address)

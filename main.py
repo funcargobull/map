@@ -25,6 +25,7 @@ class App(QMainWindow):
         self.search_btn.clicked.connect(
             lambda: self.search_button_click(self.get_user_search()))
 
+        self.clear_btn.clicked.connect(self.clear_)
         self.show()
 
     def keyPressEvent(self, e):
@@ -91,6 +92,10 @@ class App(QMainWindow):
         img.loadFromData(image)
         self.pixmap_label.setPixmap(QPixmap.fromImage(img))
         self.statusBar().showMessage(address)
+
+    def clear_(self):
+        self.pixmap_label.clear()
+        self.statusBar().showMessage("")
 
 
 if __name__ == '__main__':

@@ -24,12 +24,14 @@ def get_coords_and_address(name):
     toponym_coodrinates = toponym["Point"]["pos"]
 
     address = toponym["metaDataProperty"]["GeocoderMetaData"]["text"]
-    # if index:
-    # toponym_index = toponym_index + ', ' + \
-    #     toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
-    # Долгота и широта:
+
+    try:
+        toponym_index = toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
+    except KeyError:
+        toponym_index = ""
+
     toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
-    return (toponym_longitude, toponym_lattitude, address)
+    return toponym_longitude, toponym_lattitude, address, toponym_index
 
 
 def load_map(toponym_longitude, toponym_lattitude, spn, mode='map'):

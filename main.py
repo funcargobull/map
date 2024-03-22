@@ -77,8 +77,11 @@ class App(QMainWindow):
             elif i.text() == "Гибрид" and i.isChecked():
                 self.start_mode = "skl"
 
-        toponym_longitude, toponym_lattitude, address = get_coords_and_address(
+        toponym_longitude, toponym_lattitude, address, index = get_coords_and_address(
             toponym)
+        for i in self.index_group.buttons():
+            if i.text() == "Да" and i.isChecked() and index != "":
+                address += f", {index}"
         self.longitude = float(toponym_longitude)
         self.lattitude = float(toponym_lattitude)
 

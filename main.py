@@ -60,6 +60,11 @@ class App(QMainWindow):
                 image = load_map(self.longitude, self.lattitude,
                                  self.start_spn, self.start_mode)
                 self.show_image(image, self.address)
+                address, index = get_address_by_coords((self.lattitude, self.longitude))
+                for i in self.index_group.buttons():
+                    if i.text() == "Да" and i.isChecked() and index != "":
+                        address += f", {index}"
+                self.statusBar().showMessage(address)
             except KeyError:
                 pass
             except TypeError:

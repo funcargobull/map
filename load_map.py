@@ -34,6 +34,24 @@ def get_coords_and_address(name):
     return toponym_longitude, toponym_lattitude, address, toponym_index
 
 
+def get_address_by_coords(coords):
+    geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
+
+    geocoder_params = {
+        "apikey": "40d1649f-0493-4b70-98ba-98533de7710b",
+        "geocode": f"{coords[1]},{coords[0]}",
+        "format": "json"}
+
+    response = requests.get(geocoder_api_server, params=geocoder_params)
+    json_response = response.json()
+    # Получаем первый топоним из ответа геокодера.
+    toponym = json_response["response"]["GeoObjectCollection"][
+        "featureMember"][0]["GeoObject"]
+    address = toponym["metaDataProperty"]["GeocoderMetaData"]["text"]
+    toponym_index = toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
+    return address, toponym_index
+
+
 def load_map(toponym_longitude, toponym_lattitude, spn, mode='map'):
     org_point = "{0},{1}".format(toponym_longitude, toponym_lattitude)
     map_params = {
